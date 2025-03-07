@@ -73,9 +73,9 @@
         <inertial pos="-9.07886e-05 0.0590972 0.031089" quat="0.363978 0.441169 -0.623108 0.533504" mass="0.119226"
           diaginertia="5.94278e-05 5.89975e-05 3.13712e-05"/>
         <joint name="Rotation" class="Rotation"/>
-        <geom type="mesh" mesh="Rotation_Pitch" class="visual"/>
+        <geom type="mesh" mesh="Rotation_Pitch" class="visual" rgba="1 0 0 1"/>
         <geom type="mesh" mesh="Rotation_Pitch_Motor" class="motor_visual"/>
-        <geom type="mesh" mesh="Rotation_Pitch" class="collision"/>
+        <geom type="mesh" mesh="Rotation_Pitch" class="collision" />
         <body name="Upper_Arm" pos="0 0.1025 0.0306" euler="1.57079 0 0">
           <inertial pos="-1.72052e-05 0.0701802 0.00310545" quat="0.50104 0.498994 -0.493562 0.50632" mass="0.162409"
             diaginertia="0.000213312 0.000167164 7.01522e-05"/>

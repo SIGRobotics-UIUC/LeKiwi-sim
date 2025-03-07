@@ -68,7 +68,7 @@
                 <joint axis="0 0 1" range="-3.14 3.0"/>
             </default>
             <default class="visual">
-                <geom type="mesh" contype="0" conaffinity="0" density="0" group="2" material="orange"/>
+                <geom type="mesh" contype="0" conaffinity="0" density="0" group="2"/>
                 <default class="motor_visual">
                     <geom material="black"/>
                 </default>
@@ -85,9 +85,9 @@
 
     <actuator>
         <!-- Base drive motors -->
-        <velocity name="drive_motor_1" joint="motor_1" />
-        <velocity name="drive_motor_2" joint="ST3215_Servo_Motor-v1-1_Hub-2---Servo" />
-        <velocity name="drive_motor_3" joint="ST3215_Servo_Motor-v1_Revolute-40" />
+        <velocity name="drive_motor_1" joint="motor_1" kv="1" />
+        <velocity name="drive_motor_2" joint="ST3215_Servo_Motor-v1-1_Hub-2---Servo" kv="1"/>
+        <velocity name="drive_motor_3" joint="ST3215_Servo_Motor-v1_Revolute-40" kv="1"/>
 
         <!-- Arm joints -->
         <position class="Rotation" name="Rotation" joint="Rotation"/>
@@ -96,6 +96,8 @@
         <position class="Wrist_Pitch" name="Wrist_Pitch" joint="Wrist_Pitch"/>
         <position class="Wrist_Roll" name="Wrist_Roll" joint="Wrist_Roll"/>
         <position class="Jaw" name="Jaw" joint="Jaw"/>
+
+
     </actuator>
 
     <worldbody>
@@ -210,7 +212,9 @@
 
                 <!-- so 100 arm -->
                 <body name="Base_08q-v1" childclass="so_arm100" pos="2.6918962747757292e-09 0.02194800925240681 -0.0024000000000000553" euler="-1.5707963267948968 -1.2246467991473537e-16 3.141592653589793">
-                    <geom name="Base_08q-v1_geom" type="mesh" mesh="Base_08q-v1" pos="0 0 0" euler="0 0 0" />
+                    <geom name="Base_08q-v1_geom_collision" class="collision" mesh="Base_08q-v1" pos="0 0 0" euler="0 0 0" />
+                    <geom name="Base_08q-v1_geom_visual" class="visual" mesh="Base_08q-v1" pos="0 0 0" euler="0 0 0" />
+
                     <inertial mass="1.2829039880853146" pos="-2.9500744205753635e-06 0.02426552372353218 0.01830293573111294" fullinertia="0.0013599465686859134 0.0017754186964794691 0.0015570925522625369 1.4799628966954187e-07 2.7674912025061326e-08 0.00024876935781550404" />
                     <body name="WaveShare_Mounting_Plate_01d-v1" pos="-5.000000000000338e-05 0.06269999999999999 -0.0248" euler="-4.930380657631326e-32 0.0 -3.141592653589793" >
                         <geom name="WaveShare_Mounting_Plate_01d-v1_geom" type="mesh" mesh="WaveShare_Mounting_Plate_01d-v1" pos="0 0 0" euler="0 0 0" />
@@ -222,8 +226,10 @@
                         <body name="Rotation_Pitch_08i-v1" pos="0.0005000000000000426 -1.4695730467286493e-18 -0.029700000000000025" euler="-1.5707963267948966 -1.22464679914735e-16 3.1415926535897905">
                             <!-- base rotation motor -->
                             <joint name="Rotation" type="hinge" class="Rotation" pos="-0.011999990747593229 0.04840000000000009 2.691896167364629e-09" />
-                            <geom name="Rotation_Pitch_08i-v1_geom" type="mesh" mesh="Rotation_Pitch_08i-v1" pos="0 0 0" euler="0 0 0" />
-                            <inertial mass="0.5385469320676795" pos="-0.043555866426338956 0.03885955035006696 -0.00027156956598191" fullinertia="0.0003405231691309338 0.0001541612279221004 0.00037498929247645196 3.600698332452418e-05 6.375305991053882e-07 3.488269325163008e-06" />
+                            <geom name="Rotation_Pitch_08i-v1_geom" class="collision" mesh="Rotation_Pitch_08i-v1" pos="0 0 0" euler="0 0 0"/>
+                            <geom name="Rotation_Pitch_08i-v1_visual" class="visual" mesh="Rotation_Pitch_08i-v1" pos="0 0 0" euler="0 0 0"/>
+
+                            <inertial mass="0.119226" diaginertia="5.94278e-05 5.89975e-05 3.13712e-05" pos="-0.043555866426338956 0.03885955035006696 -0.00027156956598191" />
                             <body name="SO_ARM100_08k_Asym_Mirror_Clip-v1" pos="-0.07980000000000002 0.10884990733660738 0.0002000000000000075" euler="3.944304526105059e-31 -1.8260247115545342e-16 1.5707963267948968">
                                 <geom name="SO_ARM100_08k_Asym_Mirror_Clip-v1_geom" type="mesh" mesh="SO_ARM100_08k_Asym_Mirror_Clip-v1" pos="0 0 0" euler="0 0 0" />
                                 <inertial mass="0.10853073755546007" pos="-0.03990811717452752 -0.03644423122824269 4.979323536332773e-05" fullinertia="5.824324969726431e-05 4.591982320177254e-05 2.6819408873440288e-05 -5.297613839098786e-08 -1.9180973510866823e-07 -1.7483214372584493e-07" />
@@ -234,7 +240,8 @@
                                 <body name="SO_ARM100_08k_116_Square-v1" pos="-0.005126866945393385 0.06379145217162034 -0.0009999999999999616" euler="1.6256767954918163e-31 0.0 -1.4835298641951802">
                                     <!-- Pitch motor (second motor from the bottom) -->
                                     <joint name="Pitch" class="Pitch" type="hinge" pos="0.06508497990068259 0.012000000806400669 0.019699997308103956" />
-                                    <geom name="SO_ARM100_08k_116_Square-v1_geom" type="mesh" mesh="SO_ARM100_08k_116_Square-v1" pos="0 0 0" euler="0 0 0" />
+                                    <geom name="SO_ARM100_08k_116_Square-v1_geom" class="collision" mesh="SO_ARM100_08k_116_Square-v1" pos="0 0 0" euler="0 0 0"/>
+                                    <geom name="SO_ARM100_08k_116_Square-v1_geom_visual" class="visual" mesh="SO_ARM100_08k_116_Square-v1" pos="0 0 0" euler="0 0 0"/>
                                     <inertial mass="0.9906249126045027" pos="0.007070404444036893 0.011634572893860542 4.7591197083505164e-07" fullinertia="0.00047755006448078874 0.0016345412388245211 0.001250627685357622 -1.6631669213823954e-05 8.156005755107063e-06 6.513255604625811e-07" />
                                     <body name="STS3215_03a-v1-2" pos="-0.04748498911788117 0.027500000000000035 -0.0005000000000000074" euler="-1.1832913578315177e-30 -9.860761315262648e-32 1.5707963267948966">
                                         <geom name="STS3215_03a-v1-2_geom" type="mesh" mesh="STS3215_03a-v1-2" pos="0 0 0" euler="0 0 0"/>
@@ -242,28 +249,32 @@
                                         <body name="SO_ARM100_08k_Mirror-v1" pos="-0.013726188497897099 -0.06739211762839432 -0.0009999999999999833" euler="4.930380657631324e-32 0.0 1.6580627893946132">
                                             <!-- Elbow motor (third from the bottom) -->
                                             <joint name="Elbow" class="Elbow" type="hinge" pos="0.06484999736968537 -0.03199967927926841 0.01969999730810396" />
-                                            <geom name="SO_ARM100_08k_Mirror-v1_geom" type="mesh" mesh="SO_ARM100_08k_Mirror-v1" pos="0 0 0" euler="0 0 0" />
+                                            <geom name="SO_ARM100_08k_Mirror-v1_geom" class="collision" mesh="SO_ARM100_08k_Mirror-v1" pos="0 0 0" euler="0 0 0" />
+                                            <geom name="SO_ARM100_08k_Mirror-v1_geom_visual" class="visual" mesh="SO_ARM100_08k_Mirror-v1" pos="0 0 0" euler="0 0 0" />
                                             <inertial mass="0.8772447501056027" pos="0.0027296574022326776 -0.03213929084317096 0.004485121191960146" fullinertia="0.00036436892048462635 0.0012434311777630017 0.0009927953405503495 -8.805475751573561e-06 -0.00011598549140341498 -1.0053165291667338e-06" />
                                             <body name="STS3215_03a-v1-1" pos="-0.0585499073366074 -0.037200000000000046 -0.0004999999999999976" euler="9.63735264431557e-16 -1.9721522630525295e-31 3.141592653589793">
                                                 <geom name="STS3215_03a-v1-1_geom" type="mesh" mesh="STS3215_03a-v1-1" pos="0 0 0" euler="0 0 0" />
                                                 <inertial mass="0.2843033831904074" pos="-0.00030097243678956664 6.754837025824394e-12 0.00012706492472183838" fullinertia="3.9725278764780326e-05 7.348827769135374e-05 6.153681935695127e-05 4.014006466622477e-14 -5.568928366529229e-07 2.948942063118679e-14" />
                                                 <body name="Wrist_Roll_Pitch_08i-v1" pos="0.019746933262870473 -0.02704592313609403 -0.0014000000000000473" euler="-1.5707963267948966 -0.2617993877991496 -1.5707963267948968">
                                                     <joint name="Wrist_Pitch" type="hinge" class="Wrist_Pitch" pos="0.02009999730810412 -2.6656564912179437e-07 0.028000028350443365" />
-                                                    <geom name="Wrist_Roll_Pitch_08i-v1_geom" type="mesh" mesh="Wrist_Roll_Pitch_08i-v1" pos="0 0 0" euler="0 0 0" />
+                                                    <geom name="Wrist_Roll_Pitch_08i-v1_geom" class="collision" mesh="Wrist_Roll_Pitch_08i-v1" pos="0 0 0" euler="0 0 0" />
+                                                    <geom name="Wrist_Roll_Pitch_08i-v1_geom_visual" class="visual" mesh="Wrist_Roll_Pitch_08i-v1" pos="0 0 0" euler="0 0 0" />
                                                     <inertial mass="0.2392168278135931" pos="0.0032902187279264025 -5.110432815289402e-05 0.0016200608399941578" fullinertia="0.00011529218614688737 0.00019975423729732118 0.00012628740337444349 -4.1713915606529094e-08 6.715946549483817e-06 3.2238510278809304e-07" />
                                                     <body name="STS3215_03a_Wrist_Roll-v1" pos="0.012500000000000016 -3.552713678800501e-17 -0.01440000000000044" euler="-3.141592653589793 -7.888609052210116e-31 -3.141592653589793">
                                                         <geom name="STS3215_03a_Wrist_Roll-v1_geom" type="mesh" mesh="STS3215_03a_Wrist_Roll-v1" pos="0 0 0" euler="0 0 0" />
                                                         <inertial mass="0.2799142523131049" pos="-0.0005016951327806294 6.860730516686231e-12 0.00039013382201128285" fullinertia="3.8348518450439365e-05 7.138101530519658e-05 6.056558226028664e-05 3.975483969340679e-14 -1.5142951984968492e-06 2.9994195603795515e-14" />
                                                         <body name="Wrist_Roll_08c-v1" pos="0.0125 0.0 0.018700000000000046" euler="-0.0 0.0 3.141592653589793">
                                                             <joint name="Wrist_Roll" type="hinge" class="Wrist_Roll" pos="0 0 0" />
-                                                            <geom name="Wrist_Roll_08c-v1_geom" type="mesh" mesh="Wrist_Roll_08c-v1" pos="0 0 0" euler="0 0 0" />
+                                                            <geom name="Wrist_Roll_08c-v1_geom" class="collision" mesh="Wrist_Roll_08c-v1" pos="0 0 0" euler="0 0 0" />
+                                                            <geom name="Wrist_Roll_08c-v1_geom_visual" class="visual" mesh="Wrist_Roll_08c-v1" pos="0 0 0" euler="0 0 0" rgba="1 0 0 1"/>
                                                             <inertial mass="0.44698022927880193" pos="-0.013763226944642652 -0.0005928638236687243 0.02930577613078056" fullinertia="0.0003009649490412974 0.0003330307502686583 0.00016593464746505828 4.121088984336396e-06 5.571357694080248e-05 -1.1110664231131137e-06" />
                                                             <body name="STS3215_03a-v1" pos="0.007299999999999977 9.999999999994457e-05 0.02312500000000009" euler="1.5707963267948966 3.9443045261050573e-31 3.9443045261050625e-31">
                                                                 <geom name="STS3215_03a-v1_geom" type="mesh" mesh="STS3215_03a-v1" pos="0 0 0" euler="0 0 0" />
                                                                 <inertial mass="0.2843033831904074" pos="-0.000300972436789567 6.754829985286537e-12 0.00012706492472183519" fullinertia="3.972527876478463e-05 7.348827769135499e-05 6.153681935694965e-05 4.014025813384388e-14 -5.568928366529186e-07 2.9489218277565024e-14" />
                                                                 <body name="Moving_Jaw_08d-v1" pos="0.0125 7.105427357601002e-17 -0.0016999999999999461" euler="-3.141592653589793 1.97215226305253e-31 -0.0">
                                                                     <joint name="Jaw" type="hinge" class="Jaw" pos="-2.6918961017465466e-09 -1.804344014685877e-07 -0.020400355551613226" />
-                                                                    <geom name="Moving_Jaw_08d-v1_geom" type="mesh" mesh="Moving_Jaw_08d-v1" pos="0 0 0" euler="0 0 0" />
+                                                                    <geom name="Moving_Jaw_08d-v1_geom" class="collision" mesh="Moving_Jaw_08d-v1" pos="0 0 0" euler="0 0 0" />
+                                                                    <geom name="Moving_Jaw_08d-v1_geom_visual" class="visual" mesh="Moving_Jaw_08d-v1" pos="0 0 0" euler="0 0 0" />
                                                                     <inertial mass="0.1586808414280307" pos="-0.0016198160357624469 -0.03039637292829377 0.00038432016030383147" fullinertia="8.673205684445355e-05 2.3703900786580218e-05 7.037496093636329e-05 -4.189874398157459e-06 -8.253022754040354e-08 -1.510571385982212e-06" />
                                                                 </body>
                                                             </body>
@@ -278,7 +289,7 @@
                         </body>
                     </body>
                     <body name="Passive_Horn_01-v1" pos="2.1533155118068577e-18 0.01599999999999997 0.04520000000000005" euler="-1.5707963267948966 -1.6995388418086145e-33 3.141592653589793">
-                        <geom name="Passive_Horn_01-v1_geom" type="mesh" mesh="Passive_Horn_01-v1" pos="0 0 0" euler="0 0 0" />
+                        <geom name="Passive_Horn_01-v1_geom" type="mesh" mesh="Passive_Horn_01-v1" pos="0 0 0" euler="0 0 0"/>
                         <inertial mass="0.00454511487954422" pos="-1.7881248309573627e-13 -1.4904879645571163e-20 0.0010740097666847425" fullinertia="1.2518150597416012e-07 1.2518150393394235e-07 2.464408524633815e-07 8.715254501524865e-23 1.283788438507426e-19 -1.6828115086053736e-24" />
                     </body>
                 </body>
